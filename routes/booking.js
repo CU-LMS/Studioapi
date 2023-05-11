@@ -3,6 +3,7 @@ const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyTo
 const User = require('../models/User');
 const Slot = require('../models/Slot');
 const sendEmail = require('./email');
+const mongoose = require('mongoose');
 const bookingDoneTemplateId = process.env.BOOKINGDONEEMAILTEMPLATE
 const getTimingNoString = (timingNO) => {
   let time = ""
@@ -135,13 +136,25 @@ router.delete("/delete", async (req, res) => {
   }
 })
 
-router.post("/history", async(req,res)=>{
+router.post("/history", async (req, res) => {
   try {
-    const bookings = await Slot.find({'slotBookingsData.user': {$eq: req.body.userId}},{type: 1, timingNo: 1,studioNo:1,slotNo:1,slotBookingsData: 1})
-    res.status(201).json({count: bookings.length, bookings})
+    const bookings = await Slot.aggregate([{
+      '$unwind': {
+        'path': '$slotBookingsData'
+      }
+    }, {
+      '$match': {
+        'slotBookingsData.user': new mongoose.Types.ObjectId(req.body.userId)
+      }
+    }, {
+      $project: {
+        slotBookingsData: 1, slotNo: 1, studioNo: 1, type: 1, timingNo: 1, _id: 0
+      }
+    }])
+    res.status(201).json({ count: bookings.length, bookings })
   } catch (error) {
-    res.status(401).json({msg: 'there is some error', err: error.message})
-    
+    res.status(401).json({ msg: 'there is some error', err: error.message })
+
   }
 })
 
