@@ -88,12 +88,6 @@ router.post("/", verifyTokenAndAuthorization, async (req, res, next) => {
 router.post("/status", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const slots = await Slot.find({ 'slotBookingsData.date': { $eq: new Date(req.body.date) } });
-    // const list = await Promise.all(
-    //   hotel.rooms.map((room) => {
-    //     return Room.findById(room);
-    //   })
-    // );
-
     const slotNos = slots.map(slot => slot.slotNo)
     res.status(200).json(slotNos)
   } catch (err) {
