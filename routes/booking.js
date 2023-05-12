@@ -3,7 +3,10 @@ const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyTo
 const User = require('../models/User');
 const Slot = require('../models/Slot');
 const sendEmail = require('./email');
-const bookingDoneTemplateId = process.env.BOOKINGDONEEMAILTEMPLATE
+const BOOKINGDONEEMAILTEMPLATE = "";
+
+const bookingDoneTemplateId = process.env.BOOKINGDONEEMAILTEMPLATE || BOOKINGDONEEMAILTEMPLATE
+
 const getTimingNoString = (timingNO) => {
   let time = ""
   switch (timingNO) {

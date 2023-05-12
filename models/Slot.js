@@ -6,7 +6,7 @@ const SlotSchema = mongoose.Schema({
     timingNo: {type:Number, required: true},
     slotBookingsData: [{
         user: {type: mongoose.Types.ObjectId, ref: "User"},
-        date: {type:Date, unique: true},
+        date: {type:Date},
         program: {type: String},
         bookedAt: {type: Date, default: Date.now}
     }]
