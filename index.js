@@ -9,7 +9,7 @@ const slotRoute = require("./routes/booking");
 const createStudioRoute = require("./routes/studio");
 
 const mongoURI =
-  "mongodb+srv://testuser:D1yyQFjbm0VdxuTH@cluster0.ezylsct.mongodb.net/";
+  "mongodb+srv://studio:mueNMFYpTHy0GiQg@cluster0.ezylsct.mongodb.net/studioBooking?retryWrites=true&w=majority";
 const PORT = "8800";
 mongoose.set("strictQuery", true);
 mongoose

@@ -3,7 +3,7 @@ const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyTo
 const User = require('../models/User');
 const Slot = require('../models/Slot');
 const sendEmail = require('./email');
-const BOOKINGDONEEMAILTEMPLATE = "";
+const BOOKINGDONEEMAILTEMPLATE = "d-b3b25068960c41d8b4fc25b626e69acc";
 
 const bookingDoneTemplateId = process.env.BOOKINGDONEEMAILTEMPLATE || BOOKINGDONEEMAILTEMPLATE
 

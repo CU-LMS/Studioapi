@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const router = require("express").Router();
 
-
+const JWT_EXPIRE = "1d"
+const JWT_SECRET = "jlfdsahkj"
 //this is the main fxn, which checks for jwt token in the headers and verify it
 const verifyToken = (req,res,next)=>{
     const authHeader = req.headers.token;
@@ -9,7 +10,7 @@ const verifyToken = (req,res,next)=>{
     if(authHeader){
         const token = authHeader.split(" ")[1];
         //if token is not faulty then payload is generated else the err is thrown
-        jwt.verify(token,process.env.JWT_SECRET,process.env.JWT_EXPIRE,(err,payload)=>{
+        jwt.verify(token,process.env.JWT_SECRET || JWT_SECRET,process.env.JWT_EXPIRE || JWT_EXPIRE,(err,payload)=>{
             if(err){
                 res.status(401).json("Token is invalid");
             }else{

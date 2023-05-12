@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const SlotSchema = mongoose.Schema({
-    slotNo: {type: Number,required: true},
+    slotNo: {type: Number,required: true, unique:true},
     studioNo: {type: Number, required: true},
     type: {type: String, required: true},
     timingNo: {type:Number, required: true},
