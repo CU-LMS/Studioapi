@@ -12,7 +12,15 @@ router.post("/register", async (req, res) => {
     })
     try {
         const savedUser = await newUser.save();
-        res.status(201).json(savedUser);
+        const count = await User.countDocuments({})
+        if(count == 1){
+            await User.findOneAndUpdate({email: req.body.email},{
+                isAdmin: true,
+                status: 'approved',
+                role: 'admin'
+            })
+        }
+        res.status(201).json({msg: "user registered successfully"});
     } catch (error) {
         res.status(500).json(error);
     }

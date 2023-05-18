@@ -6,6 +6,9 @@ const User = require('../models/User');
 //in all the routes below we have used verifyTokenAnd... middleware which are imported from a file, which basically calls next fxn after getting jsonwebtoken from the headers and verifying it. if next fxn within them is called then the async fxn get it's turn to run
 
 
+//get all users
+
+
 //delete user
 router.delete("/:userId", verifyTokenAndAuthorization, async (req, res) => {
     try {
@@ -33,9 +36,21 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
     try {
         //if there is query then sort in descending order of id
         const users = query ? await User.find().sort({ _id: -1 }) : await User.find()
-        res.status(200).json(users);
+        res.status(200).json({count: users.length, users});
     } catch (error) {
         res.status(500).json(error);
+    }
+})
+
+// set user status
+router.post("/:userId", verifyTokenAndAdmin, async(req,res)=>{
+    try {
+        await User.findOneAndUpdate({_id: req.params.userId},{
+            status: req.body.status
+        })
+        res.status(201).json({msg: "user status updated"})
+    } catch (error) {
+        
     }
 })
 
